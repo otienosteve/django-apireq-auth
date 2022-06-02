@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 from urllib import request
 from django.contrib.auth import authenticate,login,logout
-from .forms import LoginForm 
+from .forms import LoginForm,SilverUserForm
 
 import json
 def home(request):
@@ -17,7 +17,9 @@ def home(request):
 def logout_user(request):
     logout(request)
     return redirect('home')
-    
+def customuser(request):
+    form=SilverUserForm()
+    return render(request,'cform.html',{'form':form})    
 def register(request):
     form=UserCreationForm()
     if request.method=='POST':

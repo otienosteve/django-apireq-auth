@@ -6,5 +6,6 @@ path('',views.home,name='home'),
 path('login/',views.login_user),
 path('logout',views.logout_user),
 path('register/',views.register),
-path('api/',views.api)
+path('api/',views.api),
+path('cuser/',views.customuser)
 ]
