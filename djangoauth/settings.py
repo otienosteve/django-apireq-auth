@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from telnetlib import AUTHENTICATION
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -103,7 +104,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS=[
+'django.contrib.auth.backends.ModelBackend',
+'user.CustomAuth.CustomAuthentication'
 
+]
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 

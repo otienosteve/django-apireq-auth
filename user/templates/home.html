@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    {% if user.username %}
+    {% if request.user.username %}
     <p>The current User is {{user.username}}</p>
     {% else %}
     <p>No user is currently logged in</p>

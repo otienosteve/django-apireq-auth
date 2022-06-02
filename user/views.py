@@ -19,6 +19,11 @@ def logout_user(request):
     return redirect('home')
 def customuser(request):
     form=SilverUserForm()
+    if request.method=='POST':
+        form=SilverUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('home')
     return render(request,'cform.html',{'form':form})    
 def register(request):
     form=UserCreationForm()
