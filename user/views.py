@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 from urllib import request
 from django.contrib.auth import authenticate,login,logout
-from .forms import LoginForm,SilverUserForm
+from .forms import LoginForm,CustomRegisterForm
 
 import json
 def home(request):
@@ -17,14 +17,7 @@ def home(request):
 def logout_user(request):
     logout(request)
     return redirect('home')
-def customuser(request):
-    form=SilverUserForm()
-    if request.method=='POST':
-        form=SilverUserForm(request.POST)
-        if form.is_valid():
-            form.save()
-        return redirect('home')
-    return render(request,'cform.html',{'form':form})    
+   
 def register(request):
     form=UserCreationForm()
     if request.method=='POST':
@@ -40,7 +33,7 @@ def login_user(request):
     if request.method=='POST':
         form=LoginForm(request.POST)
         if form.is_valid():
-            usern=form.cleaned_data['username']
+            usern=form.cleaned_data['email']
             passw=form.cleaned_data['password']
             user=authenticate(request,username=usern,password=passw)
             if user is not None:
@@ -62,6 +55,17 @@ def api(req):
     print(type(data))
     
     return render(req,'api.html',{'data':data[3]['Image Gallery']})
+def cuser(request):
+    form=CustomRegisterForm()
+    if request.method=='POST':
+        form=CustomRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponse(form)
+    context={'form':form}
+    return render(request,'customreg.html',context)
+
+
 
 #APIS is gjango
 #how to access and get data from an API
@@ -72,3 +76,7 @@ def api(req):
 #make a request to an API
 #get the data
 # display it in a template
+
+
+#customise the registration form
+#create an authentication backend- (username / password) -(email/ password)
