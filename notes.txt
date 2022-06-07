@@ -1,0 +1,2 @@
+ request.headers.get('x-requested-with') == 'XMLHttpRequest'
+ from django.views.decorators.csrf import csrf_exempt

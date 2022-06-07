@@ -7,5 +7,6 @@ path('login/',views.login_user),
 path('logout',views.logout_user),
 path('register/',views.register),
 path('api/',views.api),
-path('cuser/',views.cuser)
+path('cuser/',views.cuser),
+path('addpost',views.addpost,name='addpost')
 ]

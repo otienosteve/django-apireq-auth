@@ -14,6 +14,93 @@
     {% else %}
     <p>No user is currently logged in</p>
     {% endif %}
+    <!-- 
+    <p id="data"></p>
+
+    <button id="getdata">Get Data</button> -->
+    <form id="form">
+        <label for="name">Name</label>
+        <input type="text" name="author" id=""><br>
+        <label for="post">POST</label>
+        <textarea name="post" id="" cols="30" rows="10"></textarea>
+        <button type="submit">POST DATA</button>
+
+
+    </form>
+
+    <p id="para"></p>
+
+
+
+
+
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $('form').submit(function(e) {
+        e.preventDefault()
+        serialisedData = $(this).serialize()
+        console.log(serialisedData)
+        $.ajax({
+            type: 'POST',
+            data: serialisedData,
+            url: "{% url 'addpost' %}",
+            success: function(response) {
+                data = JSON.parse(response['resp'])
+                console.log(response)
+                post = data[0]['fields']['post']
+                document.getElementById('para').innerHTML = post
+            },
+            error: function(error) {
+                console.log(error)
+            }
+
+
+
+
+
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    })
+</script>
+<!-- <script>
+    document.getElementById('getdata').addEventListener('click', function(e) {
+        const xhttp = new XMLHttpRequest()
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                console.log(xhttp.responseText)
+                var data = JSON.parse(this.responseText)
+                console.log(data.diet)
+                document.getElementById('data').innerHTML = data.diet
+            }
+        }
+
+        xhttp.open('GET', 'https://zoo-animal-api.herokuapp.com/animals/rand', true)
+        xhttp.send()
+
+        // $.ajax({
+        //     name: value,
+        //     name: value,
+        //     name: value
+        // })
+
+
+    })
+</script> -->
 
 </html>
