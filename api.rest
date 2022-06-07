@@ -1,1 +1,7 @@
-GET https://meowfacts.herokuapp.com/
+# GET http://127.0.0.1:8000/user/getposts/
+POST http://127.0.0.1:8000/user/addposts
+Content-Type: application/json
+
+{"author":"Linus Torvalds",
+"post":"I built Linux"
+}

@@ -12,10 +12,13 @@ from django.contrib.auth import authenticate,login,logout
 from .forms import LoginForm,CustomRegisterForm,PostForm
 from .models import Post
 from django.views.decorators.csrf import csrf_exempt
-
-
+#sjnago rewst framework
+from rest_framework.decorators import api_view 
+from rest_framework.response import Response
+from .serializers import PostSerializer
 
 import json
+
 def home(request):
 
     return render(request,'home.html')
@@ -85,6 +88,50 @@ def addpost(request):
 
 
     return HttpResponse("You just called me")
+
+@api_view(['GET'])
+def getposts(request):
+    data=Post.objects.all()
+    serialz=PostSerializer(data,many=True)
+    return Response(serialz.data)
+    
+@api_view(['POST'])
+def addpost(request):
+    reqdata=PostSerializer(data=request.data)
+    if reqdata.is_valid():
+        reqdata.save()
+
+    return Response(reqdata.data)
+@api_view(['GET'])
+def single(request,id):
+    inst=Post.objects.get(id=id)
+    serdinst=PostSerializer(inst,many=False)
+    # query model/db using passed in id
+    #return the data to the view in Json format
+
+
+    return Response(serdinst.data)
+@api_view(['DELETE'])
+def deletepost(request,id):
+    inst=Post.objects.get(id=id)
+    inst.delete()
+    return Response("ITEM DELETED SUCCESSFULY")
+
+@api_view(['PUT'])
+def updatepart(request,id):
+    #query the DB
+    instnce=Post.objects.get(id=id)
+    #serializer (inst==id,req.data)
+    updtinst=PostSerializer(instance=instnce,data=request.data)
+    # if valid
+    if updtinst.is_valid():
+        updtinst.save()
+    return Response(updtinst.data)
+    #save()
+
+#install django restframework
+#
+
 # postgres://cagzbadjktqskl:e19305d64cc34d869f29e238dd6ba15d81337d06f982d1cca54eaaca43489874@ec2-54-164-40-66.compute-1.amazonaws.com:5432/da6qr5t4ifav2a
 # postgres://YourUserName:YourPassword@YourHostname:5432/YourDatabaseName
 #APIS is gjango
@@ -99,4 +146,6 @@ def addpost(request):
 
 
 #customise the registration form
+
+
 #create an authentication backend- (username / password) -(email/ password)
